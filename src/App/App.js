@@ -5,7 +5,9 @@ import {
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core";
+
 import SignInSide from "../components/SignInSide";
+import Dashboard from "./../components/dashboard/Dashboard";
 
 const theme = createMuiTheme({
   palette: {
@@ -38,8 +40,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SignInSide />
-      <CssBaseline />
+      <Dashboard />
     </ThemeProvider>
   );
 }
