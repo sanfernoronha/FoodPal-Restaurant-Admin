@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 
 import SignInSide from "../components/SignInSide";
-import Dashboard from "./../components/dashboard/Dashboard";
+import Dashboard from "../components/Dashboard";
 
 const theme = createMuiTheme({
   palette: {
