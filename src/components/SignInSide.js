@@ -14,6 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 //new imports
 import { useForm, Form } from "./useForm";
 import Controls from "./controls/Controls";
+import {useSelector, useDispatch} from 'react-redux';
+import {signIn} from '../actions/Actions'
 
 const initialFieldValues = {
   email: "",
@@ -63,9 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 export default function SignInSide() {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const { values, handleInputChange } = useForm(initialFieldValues);
 
   return (
@@ -107,7 +112,12 @@ export default function SignInSide() {
               text='SIGN IN'
               type='submit'
               fullWidth
-              size='normal'
+              size='medium'
+              onClick={(e)=>{
+                e.preventDefault();
+                dispatch(signIn(values))
+                }
+              }
             />
             <Grid container>
               <Grid item xs>
