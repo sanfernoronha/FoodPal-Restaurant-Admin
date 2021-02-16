@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,6 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 //new imports
 import { useForm, Form } from "./useForm";
 import Controls from "./controls/Controls";
+
+//store imports
+import { useDispatch, useSelector } from "react-redux";
 
 const initialFieldValues = {
   email: "",
@@ -68,6 +72,13 @@ export default function SignInSide() {
 
   const { values, handleInputChange } = useForm(initialFieldValues);
 
+  //dummy use state
+  // const [count, setCount] = useState(0);
+  //from state
+  const username = useSelector((state) => state.username);
+  const password = useSelector((state) => state.password);
+  console.log(username);
+  console.log(password);
   return (
     <Grid container component='main' className={classes.root}>
       <CssBaseline />
@@ -107,7 +118,7 @@ export default function SignInSide() {
               text='SIGN IN'
               type='submit'
               fullWidth
-              size='normal'
+              size='medium'
             />
             <Grid container>
               <Grid item xs>

@@ -1,6 +1,7 @@
 //example init state
 const initState = {
-  posts: [],
+  username: "Sanfer",
+  password: "test123",
 };
 
 const rootReducer = (state = initState, action) => {
