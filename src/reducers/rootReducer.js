@@ -1,10 +1,40 @@
+import { SIGN_IN, SIGN_OUT } from "../constants/actionType";
+import axios from "axios";
 //example init state
+
 const initState = {
-  username: "Sanfer",
-  password: "test123",
+  email: "",
+  password: "",
 };
 
 const rootReducer = (state = initState, action) => {
+  if (action.type === SIGN_IN) {
+    const name = action.payload.email;
+    const password = action.payload.password;
+    //Call backend
+    console.log(name);
+    console.log(password);
+
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/customer/signin",
+      data: {
+        name: name,
+        password: password,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("authToken", response.data.accessToken);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  if (action.type === SIGN_OUT) {
+    console.log("Sign out");
+  }
+
   return state;
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,9 +15,11 @@ import { makeStyles } from "@material-ui/core/styles";
 //new imports
 import { useForm, Form } from "./useForm";
 import Controls from "./controls/Controls";
+import { useSelector, useDispatch } from "react-redux";
+import { signIn } from "../actions/Actions";
 
 //store imports
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 const initialFieldValues = {
   email: "",
@@ -69,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const { values, handleInputChange } = useForm(initialFieldValues);
 
   //dummy use state
@@ -119,6 +121,10 @@ export default function SignInSide() {
               type='submit'
               fullWidth
               size='medium'
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(signIn(values));
+              }}
             />
             <Grid container>
               <Grid item xs>
