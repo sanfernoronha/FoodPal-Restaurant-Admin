@@ -1,4 +1,4 @@
-import { SAVE_ME, SIGN_OUT } from "../constants/actionType";
+import { SAVE_ME } from "../constants/actionType";
 // import axios from "axios";
 // import API from "../components/global/axios";
 //example init state

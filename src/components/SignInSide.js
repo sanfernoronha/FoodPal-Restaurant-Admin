@@ -16,13 +16,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Form } from "./useForm";
 import Controls from "./controls/Controls";
 import { useSelector, useDispatch } from "react-redux";
-import { signIn } from "../actions/Actions";
+// import { signIn } from "../actions/Actions";
+
+import { authService } from "../services/auth.service";
+import Connector from "../utils/Connector";
+import PropTypes from "prop-types";
+import store from "../utils/store";
 
 //store imports
 // import { useDispatch, useSelector } from "react-redux";
 
 const initialFieldValues = {
-  email: "",
+  name: "",
   password: "",
   rememberMe: false,
 };
@@ -69,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+function Login({ actions }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { values, handleInputChange } = useForm(initialFieldValues);
@@ -77,10 +82,19 @@ export default function SignInSide() {
   //dummy use state
   // const [count, setCount] = useState(0);
   //from state
-  const username = useSelector((state) => state.username);
-  const password = useSelector((state) => state.password);
-  console.log(username);
-  console.log(password);
+  // const username = useSelector((state) => state.username);
+  // const password = useSelector((state) => state.password);
+  // console.log(username);
+  // console.log(password);
+
+  function login() {
+    authService.login(values.name, values.password).then((me) => {
+      actions.saveMe(me);
+      console.log(store.getState().auth);
+      // actions.authenticate();
+    });
+  }
+
   return (
     <Grid container component='main' className={classes.root}>
       <CssBaseline />
@@ -96,10 +110,10 @@ export default function SignInSide() {
 
           <Form>
             <Controls.Input
-              name='email'
+              name='name'
               label='Email Address *'
               fullWidth
-              value={values.email}
+              value={values.name}
               onChange={handleInputChange}
             ></Controls.Input>
             <Controls.Input
@@ -123,7 +137,8 @@ export default function SignInSide() {
               size='medium'
               onClick={(e) => {
                 e.preventDefault();
-                dispatch(signIn(values));
+                // dispatch(signIn(values));
+                login();
               }}
             />
             <Grid container>
@@ -147,3 +162,18 @@ export default function SignInSide() {
     </Grid>
   );
 }
+
+const ConnectedLogin = (props) => (
+  <Connector>
+    {({ actions }) => <Login actions={actions.auth} {...props} />}
+  </Connector>
+);
+
+Login.propTypes = {
+  actions: PropTypes.object,
+};
+Login.defaultProps = {
+  actions: {},
+};
+
+export default ConnectedLogin;
