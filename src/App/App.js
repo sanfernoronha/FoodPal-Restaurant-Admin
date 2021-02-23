@@ -1,6 +1,7 @@
 import "./App.css";
 import {
   createMuiTheme,
+  CssBaseline,
   // CssBaseline,
   // makeStyles,
   ThemeProvider,
@@ -8,9 +9,10 @@ import {
 
 // import Dashboard from "../components/Dashboard";
 
-import SignIn from "../components/SignInSide";
+
 import store from "../utils/store";
 import { Provider } from "react-redux";
+import AppRouter from '../routers/AppRouter';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,7 +46,8 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <SignIn />
+        <CssBaseline />
+        <AppRouter />
       </ThemeProvider>
     </Provider>
   );
