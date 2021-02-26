@@ -6,6 +6,7 @@ const Constants = {
         // USER: "/user",
         // USERS: "/users",
         LOGIN: "/restaurant/signin",
+        GET_RESTAURANT: "/restaurant/",
         // LOGOUT: "/users/sign_out",
         // REGISTER: "/student/register",
         // FORGOT_PASSWORD: "/users/password",

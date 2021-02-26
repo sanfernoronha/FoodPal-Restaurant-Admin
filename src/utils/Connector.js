@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { actions as authActions } from "../redux/auth.module";
+import { actions as restaurantActions } from "../redux/restaurant.module"
 
 class Connector extends Component {
   render() {
@@ -19,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
   const actionList = [
     // label: String, value: Object
     { label: "auth", value: authActions },
+    { label: "restaurant", value: restaurantActions },
     // add more actions here
   ];
 

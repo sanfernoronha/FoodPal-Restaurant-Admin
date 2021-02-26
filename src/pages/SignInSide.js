@@ -28,7 +28,7 @@ import { useHistory } from "react-router-dom"
 // import { useDispatch, useSelector } from "react-redux";
 
 const initialFieldValues = {
-  name: "",
+  email: "",
   password: "",
   rememberMe: false,
 };
@@ -49,6 +49,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -90,7 +91,7 @@ function Login({ actions }) {
   let history = useHistory();
 
   function login() {
-    authService.login(values.name, values.password).then((me) => {
+    authService.login(values.email, values.password).then((me) => {
 
       actions.saveMe(me);
       console.log(store.getState().auth);
@@ -114,7 +115,7 @@ function Login({ actions }) {
 
           <Form>
             <Controls.Input
-              name='name'
+              name='email'
               label='Email Address *'
               fullWidth
               value={values.name}

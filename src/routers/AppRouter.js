@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRouter';
 import SignIn from "../pages/SignInSide";
 import Dashboard from "../pages/Dashboard";
 import Connector from "../utils/Connector";
-
+import Navbar from "../components/global/Navbar"
 
 function Router({ actions, checked, isLoggedIn, ...props }) {
 
@@ -26,7 +26,9 @@ function Router({ actions, checked, isLoggedIn, ...props }) {
 
     return (
         <BrowserRouter>
+
             <div>
+
                 <Switch>
                     {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
                     <PublicRoute path="/" component={SignIn} exact={true} />

@@ -8,11 +8,12 @@ import {
 } from "@material-ui/core";
 
 // import Dashboard from "../components/Dashboard";
-
+import { makeStyles } from "@material-ui/core/styles";
 
 import store from "../utils/store";
 import { Provider } from "react-redux";
 import AppRouter from '../routers/AppRouter';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -42,12 +43,19 @@ const theme = createMuiTheme({
   // },
 });
 
+
+
+
 function App() {
+  // const classes = useStyles();
+  // const disappear = localStorage.getItem("me") ? true : false
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppRouter />
+        <div>
+          <AppRouter />
+        </div>
       </ThemeProvider>
     </Provider>
   );

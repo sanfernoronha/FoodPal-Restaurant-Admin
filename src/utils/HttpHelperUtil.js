@@ -1,14 +1,15 @@
 import axios from "axios";
 
 import Constants from "./Constants";
-// import Me from "./Me";
+import Me from "./Me";
 
-// function getAuthHeader() {
-//   const authToken = Me.getToken();
-//   return {
-//     Authorization: "Bearer " + authToken,
-//   };
-// }
+function getAuthHeader() {
+  const authToken = Me.getToken();
+  return {
+    // Authorization: "Bearer " + authToken,
+    Authorization: authToken,
+  };
+}
 
 function handleResponse(response) {
   const { status, data } = response;
@@ -17,6 +18,7 @@ function handleResponse(response) {
 }
 
 async function handleError(error) {
+  console.log(error);
   if (error.response?.status === 401) {
     localStorage.removeItem("me");
 
@@ -25,13 +27,13 @@ async function handleError(error) {
   return Promise.reject(error.response?.data?.error);
 }
 
-// const instanceWithAuthHeader = axios.create({
-//   baseURL: Constants.Urls.apis.BASE_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//     ...getAuthHeader(),
-//   },
-// });
+const instanceWithAuthHeader = axios.create({
+  baseURL: Constants.Urls.apis.BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    ...getAuthHeader(),
+  },
+});
 
 const instanceWithoutAuthHeader = axios.create({
   baseURL: Constants.Urls.apis.BASE_URL,
@@ -46,31 +48,31 @@ const instanceWithoutAuthHeader = axios.create({
 // });
 
 const HttpHelperUtil = {
-  //   get: function (url) {
-  //     return instanceWithAuthHeader
-  //       .get(`${url}`)
-  //       .then(handleResponse)
-  //       .catch(handleError);
-  //   },
-  //   getParam: function (url, body) {
-  //     return instanceWithAuthHeader
-  //       .get(`${url}`, {
-  //         params: body,
-  //       })
-  //       .then(handleResponse)
-  //       .catch(handleError);
-  //   },
-  //   getWithAuthParam: function (url, body) {
-  //     return instanceWithAuthHeader
-  //       .get(`${url}`, {
-  //         params: body,
-  //         headers: {
-  //           ...getAuthHeader(),
-  //         },
-  //       })
-  //       .then(handleResponse)
-  //       .catch(handleError);
-  //   },
+  get: function (url) {
+    return instanceWithAuthHeader
+      .get(`${url}`)
+      .then(handleResponse)
+      .catch(handleError);
+  },
+  getParam: function (url, body) {
+    return instanceWithAuthHeader
+      .get(`${url}`, {
+        params: body,
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
+  getWithAuthParam: function (url, body) {
+    return instanceWithAuthHeader
+      .get(`${url}`, {
+        params: body,
+        headers: {
+          ...getAuthHeader(),
+        },
+      })
+      .then(handleResponse)
+      .catch(handleError);
+  },
   //   post: function (url, payload) {
   //     return instanceWithAuthHeader
   //       .post(`${url}`, payload)

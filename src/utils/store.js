@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk"
 import auth from "../redux/auth.module";
+import restaurant from "../redux/restaurant.module"
 
 const configureStore = (initialState = {}) => {
   const reducers = combineReducers({
     auth,
+    restaurant
   });
 
   // Middleware and store enhancers
