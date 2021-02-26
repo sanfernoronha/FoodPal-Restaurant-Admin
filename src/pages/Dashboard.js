@@ -18,10 +18,10 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./dashboard/listItems";
+import { mainListItems, secondaryListItems } from "../components/dashboard/listItems";
 
-import Deposits from "./dashboard/Deposits";
-import Orders from "./dashboard/Orders";
+import Deposits from "../components/dashboard/Deposits";
+import Orders from "../components/dashboard/Orders";
 
 function Copyright() {
   return (
@@ -130,7 +130,7 @@ export default function Dashboard() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
+
       <AppBar
         position='absolute'
         className={clsx(classes.appBar, open && classes.appBarShift)}

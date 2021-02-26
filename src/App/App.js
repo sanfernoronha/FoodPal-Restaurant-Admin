@@ -1,13 +1,18 @@
 import "./App.css";
 import {
   createMuiTheme,
+  CssBaseline,
   // CssBaseline,
   // makeStyles,
   ThemeProvider,
 } from "@material-ui/core";
 
-import SignInSide from "../components/SignInSide";
 // import Dashboard from "../components/Dashboard";
+
+
+import store from "../utils/store";
+import { Provider } from "react-redux";
+import AppRouter from '../routers/AppRouter';
 
 const theme = createMuiTheme({
   palette: {
@@ -39,9 +44,12 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <SignInSide />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppRouter />
+      </ThemeProvider>
+    </Provider>
   );
 }
 

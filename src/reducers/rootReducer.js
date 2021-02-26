@@ -1,43 +1,40 @@
-import { SIGN_IN, SIGN_OUT } from "../constants/actionType";
-import axios from "axios";
-import API from "../components/global/axios";
+import { SAVE_ME, SIGN_OUT } from "../constants/actionType";
+// import axios from "axios";
+// import API from "../components/global/axios";
 //example init state
 
 const initState = {
-  email: "",
-  password: "",
+  me: {},
 };
 
-const rootReducer = (state = initState, action) => {
-  if (action.type === SIGN_IN) {
-    const name = action.payload.email;
-    const password = action.payload.password;
-    //Call backend
-    console.log(name);
-    console.log(password);
+//actions
 
-    // axios({
-    //   method: "POST",
-    //   url: "http://localhost:5000/customer/signin",
-    //   data: {
-    //     name: name,
-    //     password: password,
-    //   },
-    // })
-    API.post("/customer/signin", { name: name, password: password })
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("authToken", response.data.accessToken);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  if (action.type === SIGN_OUT) {
-    console.log("Sign out");
-  }
+export const saveMe = (me) => (dispatch) =>
+  dispatch({
+    type: SAVE_ME,
+    me,
+  });
 
-  return state;
+export const actions = {
+  saveMe,
+  // authenticate,
+  // unauthenticate,
 };
 
-export default rootReducer;
+const ACTION_HANDLERS = {
+  // [AUTH_CHANGE]: (state, { isLoggedIn, checked }) => ({
+  //   ...state,
+  //   isLoggedIn,
+  //   checked,
+  // }),
+  [SAVE_ME]: (state, { me }) => ({
+    ...state,
+    me,
+  }),
+};
+
+export default function reducer(state = initState, action) {
+  const handler = ACTION_HANDLERS[action.type];
+
+  return handler ? handler(state, action) : state;
+}
