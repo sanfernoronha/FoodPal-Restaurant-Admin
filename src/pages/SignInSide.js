@@ -22,7 +22,7 @@ import { authService } from "../services/auth.service";
 import Connector from "../utils/Connector";
 import PropTypes from "prop-types";
 import store from "../utils/store";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
 //store imports
 // import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +49,6 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
-
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -92,17 +91,15 @@ function Login({ actions }) {
 
   function login() {
     authService.login(values.email, values.password).then((me) => {
-
       actions.saveMe(me);
       console.log(store.getState().auth);
-      actions.authenticate();
-      history.push("/dashboard")
+      // actions.authenticate();
+      // history.push("/dashboard");
     });
   }
 
   return (
     <Grid container component='main' className={classes.root}>
-
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>

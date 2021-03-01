@@ -12,8 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import store from "../utils/store";
 import { Provider } from "react-redux";
-import AppRouter from '../routers/AppRouter';
-
+import AppRouter from "../routers/AppRouter";
 
 const theme = createMuiTheme({
   palette: {
@@ -42,9 +41,6 @@ const theme = createMuiTheme({
   //   },
   // },
 });
-
-
-
 
 function App() {
   // const classes = useStyles();

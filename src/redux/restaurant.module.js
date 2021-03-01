@@ -1,33 +1,29 @@
 import { GET_RESTAURANT } from "../constants/actionType";
 
 const initState = {
-    restaurant: {}
+  restaurant: {},
 };
 
-export const getRestaurant = (restaurant) => (dispatch) => dispatch(
-    {
-        type: GET_RESTAURANT,
-        restaurant,
-    }
-);
-
-
+export const getRestaurant = (restaurant) => (dispatch) =>
+  dispatch({
+    type: GET_RESTAURANT,
+    restaurant,
+  });
 
 export const actions = {
-    getRestaurant
+  getRestaurant,
 };
 
-
 const ACTION_HANDLERS = {
-
-    [GET_RESTAURANT]: (state, { restaurant }) => ({
-        ...state,
-        restaurant,
-    }),
+  [GET_RESTAURANT]: (state, { restaurant }) => ({
+    ...state,
+    restaurant,
+  }),
 };
 
 export default function reducer(state = initState, action) {
-    const handler = ACTION_HANDLERS[action.type];
+  //   console.log("abcde");
+  const handler = ACTION_HANDLERS[action.type];
 
-    return handler ? handler(state, action) : state;
+  return handler ? handler(state, action) : state;
 }

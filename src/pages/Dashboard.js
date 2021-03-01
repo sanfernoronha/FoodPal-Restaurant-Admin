@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,10 +18,15 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "../components/dashboard/listItems";
-
+import {
+  mainListItems,
+  secondaryListItems,
+} from "../components/dashboard/listItems";
+import { restaurantService } from "../services/restaurant.service";
+import Connector from "../utils/Connector";
 import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
+import PropTypes from "prop-types";
 
 function Copyright() {
   return (
@@ -39,7 +44,6 @@ function Copyright() {
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
@@ -115,9 +119,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+function Dashboard({ actions, state }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  // const [open, setOpen] = React.useState(true);
   // const handleDrawerOpen = () => {
   //   setOpen(true);
   // };
@@ -126,9 +130,35 @@ export default function Dashboard() {
   // };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  // function getRestaurantData() {
+  //   restaurantService
+  //     .getRestaurantById()
+  //     .then((restaurant) => {
+  //       actions.getRestaurant();
+  //       console.log(state.restaurant);
+  //     })
+  //     .catch((error) => {
+  //       console.log("error");
+  //     });
+  // }
+  //init
+  useEffect(() => {
+    console.log(state);
+    restaurantService
+      .getRestaurantById()
+      .then((restaurant) => {
+        // actions.getRestaurant(restaurant);
+        console.log(restaurant);
+        // console.log(state.restaurant);
+      })
+      .catch((error) => {
+        console.log("error");
+      });
+  }, []);
+
   return (
     <div className={classes.content}>
-      <main >
+      <main>
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
           <Grid container spacing={3}>
@@ -157,3 +187,30 @@ export default function Dashboard() {
     </div>
   );
 }
+
+// const ConnectedDashboard = (props) => (
+//   <Connector>
+//     {({ actions, state }) => (
+//       <Dashboard actions={actions.restaurant} state={state} {...props} />
+//     )}
+//   </Connector>
+// );
+
+const ConnectedDashboard = (props) => (
+  <Connector>
+    {({ actions, state }) => (
+      <Dashboard actions={actions.restaurant} state={state} {...props} />
+    )}
+  </Connector>
+);
+
+Dashboard.propTypes = {
+  actions: PropTypes.object,
+  state: PropTypes.object,
+};
+Dashboard.defaultProps = {
+  actions: {},
+  state: {},
+};
+
+export default ConnectedDashboard;

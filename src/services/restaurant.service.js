@@ -4,23 +4,19 @@ import HttpHelper from "../utils/HttpHelperUtil";
 
 const { Routes } = Constants.Urls.apis;
 
-
 function getUserPayload(user) {
-    return JSON.stringify(user);
+  return JSON.stringify(user);
 }
 
+function getRestaurantById() {
+  const url = Routes.GET_RESTAURANT;
 
-function getRestaurantById(id) {
-    const url = Routes.GET_RESTAURANT + id;
-
-    console.log(url);
-    return HttpHelper.get(url).then((restaurant) => {
-        return restaurant;
-    })
-
+  // console.log(url);
+  return HttpHelper.get(url).then((restaurant) => {
+    return restaurant;
+  });
 }
-
 
 export const restaurantService = {
-    getRestaurantById,
+  getRestaurantById,
 };

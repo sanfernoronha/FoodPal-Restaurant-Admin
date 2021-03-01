@@ -5,10 +5,8 @@ import Me from "./Me";
 
 function getAuthHeader() {
   const authToken = Me.getToken();
-  return {
-    // Authorization: "Bearer " + authToken,
-    Authorization: authToken,
-  };
+
+  return authToken;
 }
 
 function handleResponse(response) {
@@ -19,11 +17,11 @@ function handleResponse(response) {
 
 async function handleError(error) {
   console.log(error);
-  if (error.response?.status === 401) {
-    localStorage.removeItem("me");
+  // if (error.response?.status === 401) {
+  //   localStorage.removeItem("me");
 
-    // actions.unauthenticate()();
-  }
+  //   // actions.unauthenticate()();
+  // }
   return Promise.reject(error.response?.data?.error);
 }
 

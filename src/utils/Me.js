@@ -1,15 +1,23 @@
 import store from "./store";
 
-//setup after setting up redux while app auth state persistance
 const Me = {
   _getMe: function () {
-    const { me } = store.getState().auth;
-    return me;
+    let me = JSON.parse(localStorage.getItem("me"));
+    if (me) {
+      return me;
+    } else return {};
   },
 
   getToken: function () {
-    const { token } = this._getMe;
-    return token;
+    // console.log("Calling getToken");
+    // console.log(this._getMe());
+    const { accessToken } = this._getMe();
+    // console.log("get token");
+    if (accessToken) {
+      return { "x-access-token": accessToken };
+    } else {
+      return {};
+    }
   },
 
   getMe: function () {
