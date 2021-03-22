@@ -5,6 +5,8 @@ import PublicRoute from "./PublicRouter";
 import PrivateRoute from "./PrivateRouter";
 import SignIn from "../pages/SignInSide";
 import Dashboard from "../pages/Dashboard";
+import Menu from "../pages/Menu";
+import Tables from "../pages/Tables";
 import Connector from "../utils/Connector";
 import Navbar from "../components/global/Navbar";
 import store from "../utils/store";
@@ -37,6 +39,8 @@ function Router({ actions, checked, isLoggedIn, ...props }) {
           {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
           <PublicRoute path='/' component={SignIn} exact={true} />
           <PrivateRoute path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/menu' component={Menu} />
+          <PrivateRoute path='/tables' component={Tables} />
         </Switch>
       </div>
     </BrowserRouter>

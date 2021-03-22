@@ -142,19 +142,20 @@ function Dashboard({ actions, state }) {
   //     });
   // }
   //init
-  useEffect(() => {
-    console.log(state);
-    restaurantService
-      .getRestaurantById()
-      .then((restaurant) => {
-        // actions.getRestaurant(restaurant);
-        console.log(restaurant);
-        // console.log(state.restaurant);
-      })
-      .catch((error) => {
-        console.log("error");
-      });
-  }, []);
+  // const dataFetched = true;
+  // useEffect(() => {
+  //   console.log(state);
+  //   restaurantService
+  //     .getRestaurantById()
+  //     .then((restaurant) => {
+  //       actions.getRestaurant(restaurant);
+  //       console.log(restaurant);
+  //       // console.log(state.restaurant);
+  //     })
+  //     .catch((error) => {
+  //       console.log("error");
+  //     });
+  // }, [state, actions]);
 
   return (
     <div className={classes.content}>
