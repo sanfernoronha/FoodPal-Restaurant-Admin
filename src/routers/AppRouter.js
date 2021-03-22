@@ -1,80 +1,65 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
-import PublicRoute from "./PublicRouter";
-import PrivateRoute from "./PrivateRouter";
+import React, { useEffect } from 'react';
+// import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import PublicRoute from './PublicRouter';
+import PrivateRoute from './PrivateRouter';
 import SignIn from "../pages/SignInSide";
 import Dashboard from "../pages/Dashboard";
-import Menu from "../pages/Menu";
-import Tables from "../pages/Tables";
-import Connector from "../utils/Connector";
-import Navbar from "../components/global/Navbar";
-import store from "../utils/store";
-import Loader from "../components/loader";
+import { saveme, authenticate, unAuthenticate} from '../reducers/signinSlice'
+import { useDispatch } from 'react-redux';
 
-function Router({ actions, checked, isLoggedIn, ...props }) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      let me = await localStorage.getItem("me");
-      // console.log(me);
-      if (!!me) {
+
+function Router({ ...props }) {
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // useEffect(async () => {
+    //     let me = localStorage.getItem("me");
+    //     if (!!me) {
+    //         me = JSON.parse(me);
+    //         actions.saveMe(me);
+    //         actions.authenticate();
+    //     } else {
+    //         actions.unauthenticate();
+    //     }
+    // }, [actions]);
+
+    const dispatch = useDispatch();
+    
+    useEffect(()=>{
+      const checkLoggedIn = async () => {
+        let me = localStorage.getItem("me");
+      if(!!me){
+        console.log("Hai bhai")
+        //We need to firstly parse me JSON.parse(me)
+        //Put it back to state
+        //saveme action dispatch krenge
+        //set isauthenticated to true
         me = JSON.parse(me);
-
-        actions.saveMe(me);
-
-        actions.authenticate();
-      } else {
-        actions.unauthenticate();
+        dispatch(saveme(me));
+        dispatch(authenticate());
       }
-    };
-    checkLoggedIn();
-  }, []);
-  if (!checked) return <Loader />;
+      else{
+        console.log("Hattt nahi hai")
+        dispatch(unAuthenticate());
+        //actions.unauthenticate
+      } 
+    }
+      checkLoggedIn(); 
+    },[])
 
-  return (
-    <BrowserRouter>
-      <div>
-        <Switch>
-          {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
-          <PublicRoute path='/' component={SignIn} exact={true} />
-          <PrivateRoute path='/dashboard' component={Dashboard} />
-          <PrivateRoute path='/menu' component={Menu} />
-          <PrivateRoute path='/tables' component={Tables} />
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
-}
 
-const ConnectedRouter = (props) => (
-  <Connector>
-    {({
-      actions,
-      state: {
-        auth: { isLoggedIn, checked },
-      },
-    }) => (
-      <Router
-        checked={checked}
-        isLoggedIn={isLoggedIn}
-        actions={actions.auth}
-        {...props}
-      />
-    )}
-  </Connector>
-);
 
-Router.propTypes = {
-  checked: PropTypes.bool,
-  loggedIn: PropTypes.bool,
-  actions: PropTypes.object,
+    return (
+        <BrowserRouter>
+            <div>
+                <Switch>
+                    {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
+                    <PublicRoute path="/" component={SignIn} exact={true} />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
+                </Switch>
+            </div>
+        </BrowserRouter>
+    )
 };
 
-Router.defaultProps = {
-  checked: false,
-  loggedIn: false,
-  actions: {},
-};
-
-export default ConnectedRouter;
+export default Router;
