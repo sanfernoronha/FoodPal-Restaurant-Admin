@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -11,6 +11,9 @@ import Link from "@material-ui/core/Link";
 
 import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
+import {getRestaurant} from '../reducers/restaurantSlice';
+import { useDispatch, useSelector } from "react-redux";
+
 
 function Copyright() {
   return (
@@ -140,6 +143,16 @@ function Dashboard({ actions, state }) {
   //       console.log("error");
   //     });
   // }, [state, actions]);
+  const dispatch = useDispatch();
+  const bleh = useSelector((state) => state.restaurant.restaurant)
+  useEffect(()=>{
+    const works = async() => {
+      dispatch(await getRestaurant());
+    }
+    console.log(bleh);
+
+    works();
+  }, [])
 
   return (
     <div className={classes.content}>
