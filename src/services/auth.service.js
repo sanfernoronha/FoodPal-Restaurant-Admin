@@ -1,5 +1,5 @@
 import Constants from "../utils/Constants";
-import Me from "../utils/Me";
+
 import HttpHelper from "../utils/HttpHelperUtil";
 
 const { Routes } = Constants.Urls.apis;
@@ -17,7 +17,7 @@ async function handleAuthenticate(me) {
 
 function login(email, password) {
   const payload = getUserPayload({ email, password });
-  console.log(payload);
+  // console.log(payload);
 
   return HttpHelper.postWithoutAuth(Routes.LOGIN, payload).then(
     handleAuthenticate

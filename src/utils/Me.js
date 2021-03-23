@@ -13,6 +13,7 @@ const Me = {
     // console.log(this._getMe());
     const { accessToken } = this._getMe();
     // console.log("get token");
+
     if (accessToken) {
       return { "x-access-token": accessToken };
     } else {

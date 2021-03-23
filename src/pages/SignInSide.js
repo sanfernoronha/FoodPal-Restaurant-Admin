@@ -12,11 +12,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 //new imports
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
-import {useSelector, useDispatch} from 'react-redux';
-import { authenticator } from '../reducers/signinSlice';
+import { useSelector, useDispatch } from "react-redux";
+import { authenticator } from "../reducers/signinSlice";
 import store from "../utils/store";
 
 const initialFieldValues = {
@@ -72,12 +72,15 @@ export default function SignInSide() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { values, handleInputChange } = useForm(initialFieldValues);
-  const signinHelper = async() => {
-    console.log(await dispatch(authenticator(values)))
+  const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
+
+  const signinHelper = async () => {
+    await dispatch(authenticator(values));
     // await dispatch(authenticator(values))
-    console.log(store.getState());
-    history.go("/dashboard")
-  }
+    if (isLoggedIn == true) {
+      history.go("/dashboard");
+    }
+  };
   return (
     <Grid container component='main' className={classes.root}>
       <CssBaseline />
@@ -118,11 +121,10 @@ export default function SignInSide() {
               type='submit'
               fullWidth
               size='medium'
-              onClick={(e)=>{
+              onClick={(e) => {
                 e.preventDefault();
-                signinHelper()
-                }
-              }
+                signinHelper();
+              }}
             />
             <Grid container>
               <Grid item xs>
