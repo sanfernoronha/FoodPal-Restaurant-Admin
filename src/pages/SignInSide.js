@@ -1,5 +1,4 @@
 import React from "react";
-// import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,19 +12,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 //new imports
+import {useHistory} from 'react-router-dom';
 import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
-import { useSelector, useDispatch } from "react-redux";
-// import { signIn } from "../actions/Actions";
-
-import { authService } from "../services/auth.service";
-import Connector from "../utils/Connector";
-import PropTypes from "prop-types";
+import {useSelector, useDispatch} from 'react-redux';
+import { authenticator } from '../reducers/signinSlice';
 import store from "../utils/store";
-import { useHistory } from "react-router-dom";
-
-//store imports
-// import { useDispatch, useSelector } from "react-redux";
 
 const initialFieldValues = {
   email: "",
@@ -75,31 +67,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login({ actions }) {
+export default function SignInSide() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { values, handleInputChange } = useForm(initialFieldValues);
-
-  //dummy use state
-  // const [count, setCount] = useState(0);
-  //from state
-  // const username = useSelector((state) => state.username);
-  // const password = useSelector((state) => state.password);
-  // console.log(username);
-  // console.log(password);
-  let history = useHistory();
-
-  function login() {
-    authService.login(values.email, values.password).then((me) => {
-      actions.saveMe(me);
-      console.log(store.getState().auth);
-      // actions.authenticate();
-      // history.push("/dashboard");
-    });
+  const signinHelper = async() => {
+    console.log(await dispatch(authenticator(values)))
+    // await dispatch(authenticator(values))
+    console.log(store.getState());
+    history.go("/dashboard")
   }
-
   return (
     <Grid container component='main' className={classes.root}>
+      <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
@@ -115,7 +96,7 @@ function Login({ actions }) {
               name='email'
               label='Email Address *'
               fullWidth
-              value={values.name}
+              value={values.email}
               onChange={handleInputChange}
             ></Controls.Input>
             <Controls.Input
@@ -137,11 +118,11 @@ function Login({ actions }) {
               type='submit'
               fullWidth
               size='medium'
-              onClick={(e) => {
+              onClick={(e)=>{
                 e.preventDefault();
-                // dispatch(signIn(values));
-                login();
-              }}
+                signinHelper()
+                }
+              }
             />
             <Grid container>
               <Grid item xs>
@@ -164,18 +145,3 @@ function Login({ actions }) {
     </Grid>
   );
 }
-
-const ConnectedLogin = (props) => (
-  <Connector>
-    {({ actions }) => <Login actions={actions.auth} {...props} />}
-  </Connector>
-);
-
-Login.propTypes = {
-  actions: PropTypes.object,
-};
-Login.defaultProps = {
-  actions: {},
-};
-
-export default ConnectedLogin;
