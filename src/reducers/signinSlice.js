@@ -74,7 +74,7 @@ import {
             //   console.log("payload: ",payload);
             //   console.log(state)
               state.me = payload.data;
-              state.isAuthenticated = true;
+              state.isLoggedIn = true;
             //   console.log(localStorage.getItem('me'))
           },
           [authenticator.rejected]: (state, action) => {
