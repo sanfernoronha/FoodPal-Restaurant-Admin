@@ -10,16 +10,17 @@ function getUserPayload(user) {
 
 async function handleAuthenticate(me) {
   if (!!me) {
-    await localStorage.setItem("me", JSON.stringify(me));
+    const { accessToken } = me;
+    await localStorage.setItem("me", JSON.stringify(accessToken));
   }
   return me;
 }
 
-function login(email, password) {
+async function login(email, password) {
   const payload = getUserPayload({ email, password });
   // console.log(payload);
 
-  return HttpHelper.postWithoutAuth(Routes.LOGIN, payload).then(
+  return await HttpHelper.postWithoutAuth(Routes.LOGIN, payload).then(
     handleAuthenticate
   );
 }

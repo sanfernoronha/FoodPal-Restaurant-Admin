@@ -70,15 +70,16 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
+  let history = useHistory();
   const { values, handleInputChange } = useForm(initialFieldValues);
   const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
 
   const signinHelper = async () => {
     await dispatch(authenticator(values));
+    console.log("after thunk!");
     // await dispatch(authenticator(values))
     if (isLoggedIn == true) {
-      history.go("/dashboard");
+      history.replace("/dashboard");
     }
   };
   return (

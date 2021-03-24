@@ -13,6 +13,7 @@ import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
 import { getRestaurant } from "../reducers/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 function Copyright() {
   return (
@@ -110,12 +111,15 @@ function Dashboard({ actions, state }) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const dispatch = useDispatch();
   const restaurant = useSelector((state) => state.restaurant.restaurantData);
+  let history = useHistory();
+
   useEffect(() => {
-    const getRestaurantData = async () => {
-      dispatch(await getRestaurant());
-    };
-    getRestaurantData();
-  }, []);
+    // const getRestaurantData = async () => {
+    //   dispatch(await getRestaurant());
+    // };
+    // getRestaurantData();
+    dispatch(getRestaurant());
+  }, [dispatch]);
   console.log(restaurant);
 
   return (

@@ -25,13 +25,21 @@ const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
     restaurantData: {},
+    status: "idle",
+    error: null,
   },
   reducers: {},
   extraReducers: {
-    [getRestaurant.fulfilled]: (state, { payload }) => {
-      state.restaurantData = payload;
+    [getRestaurant.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getRestaurant.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      state.restaurantData = action.payload;
     },
     [getRestaurant.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error;
       console.log(action.error);
     },
   },

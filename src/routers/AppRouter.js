@@ -12,7 +12,7 @@ function Router({ ...props }) {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      let me = localStorage.getItem("me");
+      let me = await localStorage.getItem("me");
       if (!!me) {
         //We need to firstly parse me JSON.parse(me)
         //Put it back to state
@@ -34,7 +34,7 @@ function Router({ ...props }) {
         <Switch>
           {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
           <PublicRoute path='/' component={SignIn} exact={true} />
-          <PrivateRoute path='/dashboard' component={Dashboard} />
+          <PrivateRoute path='/dashboard' component={Dashboard} exact={true} />
         </Switch>
       </div>
     </BrowserRouter>

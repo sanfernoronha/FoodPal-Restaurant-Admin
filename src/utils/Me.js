@@ -2,7 +2,8 @@ import store from "./store";
 
 const Me = {
   _getMe: function () {
-    let me = JSON.parse(localStorage.getItem("me"));
+    let me = JSON.parse(localStorage.getItem("me")); // in sync
+
     if (me) {
       return me;
     } else return {};
@@ -11,7 +12,8 @@ const Me = {
   getToken: function () {
     // console.log("Calling getToken");
     // console.log(this._getMe());
-    const { accessToken } = this._getMe();
+    const accessToken = this._getMe();
+    console.log(accessToken);
     // console.log("get token");
 
     if (accessToken) {

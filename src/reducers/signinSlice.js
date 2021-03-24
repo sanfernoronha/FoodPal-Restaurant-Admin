@@ -9,6 +9,7 @@ import { authService } from "../services/auth.service";
 export const authenticator = createAsyncThunk(
   "restaurant/signin",
   async (values, { rejectWithValue }) => {
+    console.log("inside thunk");
     try {
       const me = await authService.login(values.email, values.password);
       return me;
@@ -49,8 +50,11 @@ const signinSlice = createSlice({
     [authenticator.fulfilled]: (state, { payload }) => {
       //   console.log("payload: ",payload);
       //   console.log(state)
-      state.me = payload.data;
+      state.me = payload;
       state.isLoggedIn = true;
+      console.log("set to true", state.isLoggedIn);
+      console.log(state.me);
+
       //   console.log(localStorage.getItem('me'))
     },
     [authenticator.rejected]: (state, action) => {
