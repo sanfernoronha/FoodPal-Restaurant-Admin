@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -11,8 +11,9 @@ import Link from "@material-ui/core/Link";
 
 import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
-import {getRestaurant} from '../reducers/restaurantSlice';
+import { getRestaurant, changeRefreshed } from "../reducers/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 
 function Copyright() {
@@ -106,53 +107,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function Dashboard({ actions, state }) {
   const classes = useStyles();
-  // const [open, setOpen] = React.useState(true);
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  // function getRestaurantData() {
-  //   restaurantService
-  //     .getRestaurantById()
-  //     .then((restaurant) => {
-  //       actions.getRestaurant();
-  //       console.log(state.restaurant);
-  //     })
-  //     .catch((error) => {
-  //       console.log("error");
-  //     });
-  // }
-  //init
-  // const dataFetched = true;
-  // useEffect(() => {
-  //   console.log(state);
-  //   restaurantService
-  //     .getRestaurantById()
-  //     .then((restaurant) => {
-  //       actions.getRestaurant(restaurant);
-  //       console.log(restaurant);
-  //       // console.log(state.restaurant);
-  //     })
-  //     .catch((error) => {
-  //       console.log("error");
-  //     });
-  // }, [state, actions]);
   const dispatch = useDispatch();
-  const bleh = useSelector((state) => state.restaurant.restaurant)
-  useEffect(()=>{
-    const works = async() => {
-      dispatch(await getRestaurant());
-    }
-    console.log(bleh);
+  const restaurant = useSelector((state) => state.restaurant.restaurantData);
+  let history = useHistory();
+  const refresh = useSelector((state) => state.restaurant.refreshed)
+  const reload = async() =>{
+  if(refresh == true){
+    await dispatch(changeRefreshed());
+    
+  }
+  else{
+    console.log("Good to go");
+  }
+}
+  useEffect(() => {
+    // const getRestaurantData = async () => {
+    //   dispatch(await getRestaurant());
+    // };
+    // getRestaurantData();
+    dispatch(getRestaurant());
+    reload();
 
-    works();
-  }, [])
+  }, [dispatch]);
+  console.log(restaurant);
 
   return (
     <div className={classes.content}>
@@ -160,17 +142,18 @@ function Dashboard({ actions, state }) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}></Paper>
+              <Paper className={fixedHeightPaper}>
+                <h1>{restaurant.name}</h1>
+              </Paper>
             </Grid>
-            {/* Recent Deposits */}
+
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <Deposits />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Orders />
@@ -185,7 +168,5 @@ function Dashboard({ actions, state }) {
     </div>
   );
 }
-
-
 
 export default Dashboard;
