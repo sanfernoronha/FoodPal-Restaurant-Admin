@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -13,8 +13,6 @@ import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
 import { getRestaurant, changeRefreshed } from "../reducers/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-
 
 function Copyright() {
   return (
@@ -107,66 +105,84 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function Dashboard({ actions, state }) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const dispatch = useDispatch();
   const restaurant = useSelector((state) => state.restaurant.restaurantData);
-  let history = useHistory();
-  const refresh = useSelector((state) => state.restaurant.refreshed)
-  const reload = async() =>{
-  if(refresh == true){
-    await dispatch(changeRefreshed());
-    
-  }
-  else{
-    console.log("Good to go");
-  }
-}
+  const restaurantStatus = useSelector((state) => state.restaurant.status);
+  // let history = useHistory();
+  const refresh = useSelector((state) => state.restaurant.refreshed);
+
   useEffect(() => {
     // const getRestaurantData = async () => {
     //   dispatch(await getRestaurant());
     // };
     // getRestaurantData();
-    dispatch(getRestaurant());
-    reload();
+    console.log("dashboard reached");
+    const reload = async () => {
+      if (refresh === true) {
+        await dispatch(changeRefreshed());
+      } else {
+        console.log("Good to go");
+      }
+    };
+    if (restaurantStatus === "idle") {
+      dispatch(getRestaurant());
+      reload();
+    }
+  }, [restaurantStatus, dispatch, refresh]);
 
-  }, [dispatch]);
-  console.log(restaurant);
+  if (restaurantStatus === "succeeded") {
+    return (
+      <div className={classes.content}>
+        <main>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth='lg' className={classes.container}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper className={fixedHeightPaper}>
+                  <h1>{restaurant.data.name}</h1>
+                </Paper>
+              </Grid>
 
-  return (
-    <div className={classes.content}>
-      <main>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth='lg' className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <h1>{restaurant.name}</h1>
-              </Paper>
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightPaper}>
+                  <Deposits />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Orders />
+                </Paper>
+              </Grid>
             </Grid>
-
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
-  );
+            <Box pt={4}>
+              <Copyright />
+            </Box>
+          </Container>
+        </main>
+      </div>
+    );
+  } else {
+    //failed
+    return (
+      <h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
+        maiores architecto ipsum quod! Distinctio molestias repellendus saepe
+        facilis porro aut recusandae, vitae nulla quos ad dolorum asperiores
+        natus ab esse libero aspernatur ducimus veniam cupiditate temporibus!
+        Aperiam animi fuga saepe veritatis numquam iusto quibusdam suscipit,
+        nulla sint explicabo necessitatibus rem provident ratione voluptas aut
+        quis porro soluta eaque. Quos cupiditate necessitatibus omnis similique
+        in sed consequuntur, adipisci delectus eius at neque tempore quis saepe
+        perspiciatis sunt quo dolores, est cum accusamus consectetur qui ducimus
+        harum ratione! Qui, minima optio amet tempore nam beatae animi
+        praesentium fugiat officiis doloribus odio impedit!
+      </h1>
+    );
+  }
 }
 
 export default Dashboard;

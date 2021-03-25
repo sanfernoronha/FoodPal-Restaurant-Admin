@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 
 const PublicRoute = ({ component: Component, ...rest }) => {
   var isAuthenticated = useSelector((state) => state.signin.isLoggedIn);
+  console.log(isAuthenticated);
   return (
     <Route
       {...rest}

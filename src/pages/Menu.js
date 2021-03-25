@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 import MenuCardItem from "../components/menu/MenuCardItem";
 
@@ -39,31 +39,29 @@ export default function Menu() {
         {
           _id: 1,
           name: "Chicken Tikka Pizza",
-          price: 400
+          price: 400,
         },
         {
           _id: 2,
           name: "Chicken Feast Pizza",
-          price: 500
-        }
+          price: 500,
+        },
       ],
-      name: "Main"
+      name: "Main",
     },
     {
       items: [
         {
           _id: 3,
-        name: "Icecream",
-        price: 100
-        }
-
+          name: "Icecream",
+          price: 100,
+        },
       ],
-      name: "Dessert"
-    }
+      name: "Dessert",
+    },
+  ]);
 
-  ])
-
-  console.log(menu)
+  console.log(menu);
 
   return (
     <div className={classes.content}>
@@ -92,37 +90,39 @@ export default function Menu() {
               </Button>
             </Box>
           </Box>
-          <Grid container direction="column" justify="flex-start" alignItems="flex-start">
-            {menu.map((menuItem,index) => {
-             return (
-              <div key={index} className={classes.container}>
-                <Typography
-                variant='subtitle2'
-                color='inherit'
-                noWrap
-                className={classes.title}
-                >
-                  {`${menuItem.name}(${menuItem.items.length})`}
-                </Typography>
-                <br/>
-                <Grid container className={classes.root} spacing={2}>
-                  <Grid item xs={12}>
-                    <Grid container justify='flex-start' spacing={6}>
-                      {menuItem.items.map((item,index) => (
-                     <Grid key={index} item>
-                  <MenuCardItem name={item.name} price={item.price}/>
-                </Grid>
-                      )
-                  ) 
-                  }
+          <Grid
+            container
+            direction='column'
+            justify='flex-start'
+            alignItems='flex-start'
+          >
+            {menu.map((menuItem, index) => {
+              return (
+                <div key={index} className={classes.container}>
+                  <Typography
+                    variant='subtitle2'
+                    color='inherit'
+                    noWrap
+                    className={classes.title}
+                  >
+                    {`${menuItem.name}(${menuItem.items.length})`}
+                  </Typography>
+                  <br />
+                  <Grid container className={classes.root} spacing={2}>
+                    <Grid item xs={12}>
+                      <Grid container justify='flex-start' spacing={6}>
+                        {menuItem.items.map((item, index) => (
+                          <Grid key={index} item>
+                            <MenuCardItem name={item.name} price={item.price} />
+                          </Grid>
+                        ))}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid> 
-              </div>
-              )
+                </div>
+              );
             })}
           </Grid>
-          
         </Container>
       </main>
     </div>

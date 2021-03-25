@@ -17,7 +17,6 @@ import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
 import { useSelector, useDispatch } from "react-redux";
 import { authenticator } from "../reducers/signinSlice";
-import store from "../utils/store";
 
 const initialFieldValues = {
   email: "",
@@ -78,7 +77,7 @@ export default function SignInSide() {
     await dispatch(authenticator(values));
     console.log("after thunk!");
     // await dispatch(authenticator(values))
-    if (isLoggedIn == true) {
+    if (isLoggedIn === true) {
       history.replace("/dashboard");
     }
   };

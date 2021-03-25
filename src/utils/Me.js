@@ -13,7 +13,7 @@ const Me = {
     // console.log("Calling getToken");
     // console.log(this._getMe());
     const accessToken = this._getMe();
-    console.log(accessToken);
+
     // console.log("get token");
 
     if (accessToken) {

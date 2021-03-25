@@ -1,17 +1,13 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { authService } from "../services/auth.service";
 
 export const authenticator = createAsyncThunk(
   "restaurant/signin",
   async (values, { rejectWithValue }) => {
-    console.log("inside thunk");
     try {
       const me = await authService.login(values.email, values.password);
+
       return me;
     } catch (err) {
       if (!err.response) {
@@ -26,34 +22,38 @@ const signinSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    me: "",
+    me: {},
     checked: false,
+    token: "",
   },
   reducers: {
     saveme: (state, action) => {
       //This accepts me object and saves it to state
       // console.log(action.payload);
-      state.me = action.payload;
+      console.log("save me called");
+      state.token = action.payload;
     },
     authenticate: (state, action) => {
       //This sets isLoggedin to turu
-      // console.log("Logged in");
+      console.log("Logged in");
       state.isLoggedIn = true;
+      state.checked = true;
     },
     unAuthenticate: (state, action) => {
       //This sets isLoggedIn to Falase
       // console.log("Logged out");
       state.isLoggedIn = false;
+      state.checked = true;
     },
   },
   extraReducers: {
     [authenticator.fulfilled]: (state, { payload }) => {
       //   console.log("payload: ",payload);
       //   console.log(state)
-      state.me = payload;
+
+      state.token = payload.accessToken;
+      state.me = payload.restaurant;
       state.isLoggedIn = true;
-      console.log("set to true", state.isLoggedIn);
-      console.log(state.me);
 
       //   console.log(localStorage.getItem('me'))
     },

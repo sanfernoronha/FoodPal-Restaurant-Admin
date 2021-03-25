@@ -1,10 +1,6 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { restaurantService } from "../services/restaurant.service";
+// import { restaurantService } from "../services/restaurant.service";
 export const getRestaurant = createAsyncThunk(
   "restaurant/get",
   async (_, { rejectWithValue }) => {
@@ -19,7 +15,7 @@ export const getRestaurant = createAsyncThunk(
     //   return rejectWithValue(err.response.data);
     // }
     let token = JSON.parse(localStorage.getItem("me"));
-    console.log(token);
+
     try {
       const data = await axios({
         headers: {
@@ -45,10 +41,9 @@ const restaurantSlice = createSlice({
     refreshed: true,
   },
   reducers: {
-    changeRefreshed: state => {
-      state.refreshed = false
-      
-    }
+    changeRefreshed: (state) => {
+      state.refreshed = false;
+    },
   },
   extraReducers: {
     [getRestaurant.pending]: (state, action) => {
@@ -61,6 +56,7 @@ const restaurantSlice = createSlice({
     [getRestaurant.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error;
+      console.log("failed");
       // console.log(action.error);
       window.location.reload();
     },
@@ -71,4 +67,4 @@ const restaurantSlice = createSlice({
 export default restaurantSlice.reducer;
 // export const selectLogged = state;
 
-export const {changeRefreshed} = restaurantSlice.actions;
+export const { changeRefreshed } = restaurantSlice.actions;
