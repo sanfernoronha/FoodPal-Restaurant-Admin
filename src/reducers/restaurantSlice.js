@@ -42,8 +42,14 @@ const restaurantSlice = createSlice({
     restaurantData: {},
     status: "idle",
     error: null,
+    refreshed: true,
   },
-  reducers: {},
+  reducers: {
+    changeRefreshed: state => {
+      state.refreshed = false
+      
+    }
+  },
   extraReducers: {
     [getRestaurant.pending]: (state, action) => {
       state.status = "loading";
@@ -55,7 +61,8 @@ const restaurantSlice = createSlice({
     [getRestaurant.rejected]: (state, action) => {
       state.status = "failed";
       state.error = action.error;
-      console.log(action.error);
+      // console.log(action.error);
+      window.location.reload();
     },
   },
 });
@@ -63,3 +70,5 @@ const restaurantSlice = createSlice({
 // export const {saveme, authenticate, unAuthenticate} = restaurantSlice.actions;
 export default restaurantSlice.reducer;
 // export const selectLogged = state;
+
+export const {changeRefreshed} = restaurantSlice.actions;

@@ -11,9 +11,10 @@ import Link from "@material-ui/core/Link";
 
 import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
-import { getRestaurant } from "../reducers/restaurantSlice";
+import { getRestaurant, changeRefreshed } from "../reducers/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+
 
 function Copyright() {
   return (
@@ -106,19 +107,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function Dashboard({ actions, state }) {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const dispatch = useDispatch();
   const restaurant = useSelector((state) => state.restaurant.restaurantData);
   let history = useHistory();
-
+  const refresh = useSelector((state) => state.restaurant.refreshed)
+  const reload = async() =>{
+  if(refresh == true){
+    await dispatch(changeRefreshed());
+    
+  }
+  else{
+    console.log("Good to go");
+  }
+}
   useEffect(() => {
     // const getRestaurantData = async () => {
     //   dispatch(await getRestaurant());
     // };
     // getRestaurantData();
     dispatch(getRestaurant());
+    reload();
+
   }, [dispatch]);
   console.log(restaurant);
 
