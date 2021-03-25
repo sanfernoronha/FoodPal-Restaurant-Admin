@@ -119,7 +119,7 @@ function Dashboard({ actions, state }) {
     //   dispatch(await getRestaurant());
     // };
     // getRestaurantData();
-    console.log("dashboard reached");
+
     const reload = async () => {
       if (refresh === true) {
         await dispatch(changeRefreshed());

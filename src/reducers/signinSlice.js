@@ -30,12 +30,12 @@ const signinSlice = createSlice({
     saveme: (state, action) => {
       //This accepts me object and saves it to state
       // console.log(action.payload);
-      console.log("save me called");
+
       state.token = action.payload;
     },
     authenticate: (state, action) => {
       //This sets isLoggedin to turu
-      console.log("Logged in");
+
       state.isLoggedIn = true;
       state.checked = true;
     },
