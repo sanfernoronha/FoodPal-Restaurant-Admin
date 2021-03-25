@@ -5,6 +5,7 @@ import PrivateRoute from "./PrivateRouter";
 import SignIn from "../pages/SignInSide";
 import Dashboard from "../pages/Dashboard";
 import Menu from "../pages/Menu";
+import OrdersSide from "../pages/OrdersSide";
 import { saveme, authenticate, unAuthenticate } from "../reducers/signinSlice";
 import { useDispatch } from "react-redux";
 
@@ -24,9 +25,10 @@ function Router({ ...props }) {
       <div>
         <Switch>
           {/* <PrivateRoute path="/" component={Dashboard} exact={true} /> */}
-          <PublicRoute path='/' component={SignIn} exact={true} />
-          <PrivateRoute path='/dashboard' component={Dashboard} exact={true} />
-          <PrivateRoute path='/menu' component={Menu} />
+          <PublicRoute path="/" component={SignIn} exact={true} />
+          <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
+          <PrivateRoute path="/menu" component={Menu} />
+          <PrivateRoute path="/orders" component={OrdersSide} />
         </Switch>
       </div>
     </BrowserRouter>
