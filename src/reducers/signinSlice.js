@@ -26,7 +26,7 @@ const signinSlice = createSlice({
   name: "auth",
   initialState: {
     isLoggedIn: false,
-    me: {},
+    me: "",
     checked: false,
   },
   reducers: {

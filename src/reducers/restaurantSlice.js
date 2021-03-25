@@ -8,15 +8,30 @@ import { restaurantService } from "../services/restaurant.service";
 export const getRestaurant = createAsyncThunk(
   "restaurant/get",
   async (_, { rejectWithValue }) => {
-    try {
-      const restaurantData = await restaurantService.getRestaurantById();
+    // try {
+    //   const restaurantData = await restaurantService.getRestaurantById();
 
-      return restaurantData;
-    } catch (err) {
-      if (!err.response) {
-        throw err;
-      }
-      return rejectWithValue(err.response.data);
+    //   return restaurantData;
+    // } catch (err) {
+    //   if (!err.response) {
+    //     throw err;
+    //   }
+    //   return rejectWithValue(err.response.data);
+    // }
+    let token = JSON.parse(localStorage.getItem("me"));
+    console.log(token);
+    try {
+      const data = await axios({
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+        method: "GET",
+        url: "http://localhost:5000/restaurant/get",
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
