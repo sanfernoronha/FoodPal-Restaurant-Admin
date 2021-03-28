@@ -102,9 +102,9 @@ class Orders extends React.Component {
 
   handleIsPreparing = (_id, item) => {
     var Orders = this.state.orders;
-    var orderIndex = Orders.findIndex((obj) => obj._id == _id);
+    var orderIndex = Orders.findIndex((obj) => obj._id === _id);
     var objIndex = Orders[orderIndex].items.findIndex(
-      (obj) => obj._id == item._id
+      (obj) => obj._id === item._id
     );
     Orders[orderIndex].items[objIndex].isPreparing = true;
     this.setState({ orders: Orders });
@@ -112,9 +112,9 @@ class Orders extends React.Component {
 
   handleIsPrepared = (_id, item) => {
     var Orders = this.state.orders;
-    var orderIndex = Orders.findIndex((obj) => obj._id == _id);
+    var orderIndex = Orders.findIndex((obj) => obj._id === _id);
     var objIndex = Orders[orderIndex].items.findIndex(
-      (obj) => obj._id == item._id
+      (obj) => obj._id === item._id
     );
     Orders[orderIndex].items[objIndex].isPrepared = true;
     this.setState({ orders: Orders });
@@ -122,9 +122,9 @@ class Orders extends React.Component {
 
   handleIsServed = (_id, item) => {
     var Orders = this.state.orders;
-    var orderIndex = Orders.findIndex((obj) => obj._id == _id);
+    var orderIndex = Orders.findIndex((obj) => obj._id === _id);
     var objIndex = Orders[orderIndex].items.findIndex(
-      (obj) => obj._id == item._id
+      (obj) => obj._id === item._id
     );
     Orders[orderIndex].items[objIndex].isServed = true;
     this.setState({ orders: Orders });

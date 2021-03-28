@@ -8,6 +8,7 @@ import Menu from "../pages/Menu";
 import OrdersSide from "../pages/OrdersSide";
 import { saveme, authenticate, unAuthenticate } from "../reducers/signinSlice";
 import { useDispatch } from "react-redux";
+import Tables from "../pages/Tables";
 
 function Router({ ...props }) {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function Router({ ...props }) {
           <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
           <PrivateRoute path="/menu" component={Menu} />
           <PrivateRoute path="/orders" component={OrdersSide} />
+          <PrivateRoute path="/tables" component={Tables} />
         </Switch>
       </div>
     </BrowserRouter>
