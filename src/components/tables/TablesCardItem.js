@@ -38,7 +38,8 @@ export default function TablesCardItem() {
   const [data, setData] = useState({
     id: "5fef0e0ff4b5ef08a357d814",
     tableNumber: 1,
-  });
+  },
+  );
 
   const [showQr, setShowQr] = useState(false);
 

@@ -17,8 +17,8 @@ const Box = styled("div")(compose(spacing, palette));
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: theme.palette.primary.light
+
   },
   body: {
     fontSize: 14,
@@ -27,17 +27,18 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
+
   },
 }))(TableRow);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 1050,
   },
-});
+  tableHead: {
+    backgroundColor: theme.palette.primary.main
+  }
+}));
 
 export default function CustomizedTables({
   order,
@@ -49,11 +50,11 @@ export default function CustomizedTables({
 }) {
   const classes = useStyles();
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ marginTop: 20 }}>
       <Table className={classes.table} aria-label="customized table">
-        <TableHead>
+        <TableHead className={classes.tableHead}>
           <TableRow>
-            <TableCell align="left">Table Number : {tableNumber}</TableCell>
+            <TableCell align="left" style={{ color: "white" }}>Table Number : {tableNumber}</TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>

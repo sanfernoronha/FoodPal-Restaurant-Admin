@@ -60,6 +60,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingTop: 20,
+    paddingBottom: 20
   },
   drawerPaper: {
     position: "relative",
@@ -118,7 +120,22 @@ export default function OrdersSide() {
       <main>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+
+
+          <Typography
+            component='h1'
+            align="center"
+            variant='h3'
+            color='inherit'
+            noWrap
+            className={classes.title}
+          >
+            Orders
+              </Typography>
+
+
+
+          <Grid justify="center" alignItems="center" container spacing={3}>
             <Grid item>
               <AllOrders />
             </Grid>
