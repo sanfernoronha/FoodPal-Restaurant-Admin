@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import React from "react";
 
 export default function Input(props) {
-  const { name, label, value, onChange, ...other } = props;
+  const { name, label, value, error = null, onChange, ...other } = props;
   return (
     <TextField
       variant='outlined'
@@ -12,7 +12,7 @@ export default function Input(props) {
       value={value}
       {...other}
       onChange={onChange}
-      autoFocus
+      {...(error && { error: true, helperText: error })}
     />
   );
 }

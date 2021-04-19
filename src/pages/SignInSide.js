@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,11 +17,12 @@ import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
 import { useSelector, useDispatch } from "react-redux";
 import { authenticator } from "../reducers/signinSlice";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 const initialFieldValues = {
   email: "",
   password: "",
-  rememberMe: false,
 };
 
 function Copyright() {
@@ -70,8 +71,24 @@ export default function SignInSide() {
   const classes = useStyles();
   const dispatch = useDispatch();
   let history = useHistory();
-  const { values, handleInputChange } = useForm(initialFieldValues);
+
   const isLoggedIn = useSelector((state) => state.signin.isLoggedIn);
+
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors }
+    if ('email' in fieldValues)
+      temp.email = fieldValues.email ? ((/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(fieldValues.email) ? "" : "Email is not valid") : "Email is required"
+    if ('password' in fieldValues)
+      temp.password = fieldValues.password ? "" : "This field is required."
+    setErrors({
+      ...temp
+    })
+
+    if (fieldValues === values)
+      return Object.values(temp).every(x => x === "")
+  }
+
+
 
   const signinHelper = async () => {
     await dispatch(authenticator(values));
@@ -80,6 +97,27 @@ export default function SignInSide() {
     if (isLoggedIn === true) {
       history.replace("/dashboard");
     }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      signinHelper()
+    }
+    else {
+      handleClick()
+    }
+  }
+  const { values, handleInputChange, errors, setErrors, setValues, resetForm } = useForm(initialFieldValues, true, validate);
+  const [open, setOpen] = useState(false)
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
   return (
     <Grid container component='main' className={classes.root}>
@@ -94,13 +132,15 @@ export default function SignInSide() {
             Sign in
           </Typography>
 
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Controls.Input
               name='email'
               label='Email Address *'
               fullWidth
               value={values.email}
               onChange={handleInputChange}
+              error={errors.email}
+
             ></Controls.Input>
             <Controls.Input
               name='password'
@@ -108,23 +148,19 @@ export default function SignInSide() {
               fullWidth
               value={values.password}
               onChange={handleInputChange}
+              error={errors.password}
+              type="password"
             ></Controls.Input>
-            <Controls.CheckBox
-              name='rememberMe'
-              label='Remember me'
-              value={values.rememberMe}
-              onChange={handleInputChange}
-            />
             <Controls.Button
               className={classes.submit}
               text='SIGN IN'
               type='submit'
               fullWidth
               size='medium'
-              onClick={(e) => {
-                e.preventDefault();
-                signinHelper();
-              }}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   signinHelper();
+            // }}
             />
             <Grid container>
               <Grid item xs>
@@ -144,6 +180,11 @@ export default function SignInSide() {
           </Form>
         </div>
       </Grid>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          Please fill the fields correctly!
+  </Alert>
+      </Snackbar>
     </Grid>
   );
 }
