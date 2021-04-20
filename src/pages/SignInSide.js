@@ -92,11 +92,12 @@ export default function SignInSide() {
 
   const signinHelper = async () => {
     await dispatch(authenticator(values));
-    console.log("after thunk!");
+
     // await dispatch(authenticator(values))
-    if (isLoggedIn === true) {
-      history.replace("/dashboard");
-    }
+    // if (isLoggedIn === true) {
+    //   console.log(isLoggedIn);
+    //   history.replace("/dashboard");
+    // }
   };
   const handleSubmit = (e) => {
     e.preventDefault();

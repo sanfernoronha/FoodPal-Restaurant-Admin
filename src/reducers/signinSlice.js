@@ -54,7 +54,7 @@ const signinSlice = createSlice({
       state.token = payload.accessToken;
       state.me = payload.restaurant;
       state.isLoggedIn = true;
-
+      console.log("fulfilled!");
       //   console.log(localStorage.getItem('me'))
     },
     [authenticator.rejected]: (state, action) => {

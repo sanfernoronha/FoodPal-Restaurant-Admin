@@ -13,7 +13,7 @@ import Deposits from "../components/dashboard/Deposits";
 import Orders from "../components/dashboard/Orders";
 import { getRestaurant, changeRefreshed } from "../reducers/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { unAuthenticate } from "../reducers/signinSlice";
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
@@ -112,7 +112,7 @@ function Dashboard({ actions, state }) {
   const restaurant = useSelector((state) => state.restaurant.restaurantData);
   const restaurantStatus = useSelector((state) => state.restaurant.status);
   // let history = useHistory();
-  const refresh = useSelector((state) => state.restaurant.refreshed);
+  // const refresh = useSelector((state) => state.restaurant.refreshed);
 
   useEffect(() => {
     // const getRestaurantData = async () => {
@@ -120,18 +120,23 @@ function Dashboard({ actions, state }) {
     // };
     // getRestaurantData();
 
-    const reload = async () => {
-      if (refresh === true) {
-        await dispatch(changeRefreshed());
-      } else {
-        console.log("Good to go");
-      }
-    };
+    // const reload = async () => {
+    //   if (refresh === true) {
+    //     await dispatch(changeRefreshed());
+    //   } else {
+    //     console.log("Good to go");
+    //   }
+    // };
     if (restaurantStatus === "idle") {
       dispatch(getRestaurant());
-      reload();
+      // reload();
     }
-  }, [restaurantStatus, dispatch, refresh]);
+    else if (restaurantStatus === "failed") {
+      console.log("Failed");
+      dispatch(unAuthenticate());
+
+    }
+  }, [restaurantStatus, dispatch]);
 
   if (restaurantStatus === "succeeded") {
     return (

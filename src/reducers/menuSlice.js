@@ -42,7 +42,7 @@ const menuSlice = createSlice({
       state.status = "failed";
       state.error = action.error;
       console.log("failed");
-      window.location.reload();
+
     },
   },
 });

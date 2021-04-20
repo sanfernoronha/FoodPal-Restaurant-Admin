@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import restaurantSlice from "../reducers/restaurantSlice";
 import signinReducer from "../reducers/signinSlice";
 import menuSlice from "../reducers/menuSlice";
@@ -9,4 +9,5 @@ export default configureStore({
     restaurant: restaurantSlice,
     menu: menuSlice,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });

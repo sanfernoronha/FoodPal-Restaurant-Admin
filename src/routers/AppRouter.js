@@ -20,7 +20,7 @@ function Router({ ...props }) {
   } else {
     dispatch(unAuthenticate());
   }
-
+  console.log("checking");
   return (
     <BrowserRouter>
       <div>

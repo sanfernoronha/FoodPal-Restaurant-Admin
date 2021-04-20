@@ -70,6 +70,9 @@ export default function Menu() {
     if (menuStatus === "idle") {
       dispatch(getMenu());
     }
+    else if (menuStatus === "failed") {
+      console.log("Failed");
+    }
   }, [dispatch, menuStatus]);
   console.log(menuData);
 

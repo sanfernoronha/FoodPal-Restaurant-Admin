@@ -25,6 +25,11 @@ async function login(email, password) {
   );
 }
 
+async function logout() {
+  await localStorage.removeItem("me")
+}
+
 export const authService = {
   login,
+  logout
 };

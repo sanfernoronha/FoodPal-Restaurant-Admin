@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { authService } from "../services/auth.service";
 // import { restaurantService } from "../services/restaurant.service";
 export const getRestaurant = createAsyncThunk(
   "restaurant/get",
@@ -57,8 +58,9 @@ const restaurantSlice = createSlice({
       state.status = "failed";
       state.error = action.error;
       console.log("failed");
+      authService.logout();
       // console.log(action.error);
-      window.location.reload();
+
     },
   },
 });

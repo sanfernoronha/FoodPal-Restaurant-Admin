@@ -2,7 +2,7 @@ import "./App.css";
 import {
   createMuiTheme,
   CssBaseline,
-  
+
   // makeStyles,
   ThemeProvider,
 } from "@material-ui/core";
@@ -13,7 +13,7 @@ import {
 import store from "../utils/store";
 import { Provider } from "react-redux";
 import AppRouter from "../routers/AppRouter";
-
+import { BrowserRouter } from "react-router-dom";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -50,7 +50,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div>
-          <AppRouter />
+          <BrowserRouter>
+            <AppRouter />
+          </BrowserRouter>
+
         </div>
       </ThemeProvider>
     </Provider>
